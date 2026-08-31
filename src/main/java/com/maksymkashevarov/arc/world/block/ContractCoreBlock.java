@@ -1,8 +1,11 @@
 package com.maksymkashevarov.arc.world.block;
 
+import com.maksymkashevarov.arc.registry.ArcAttachments;
 import com.maksymkashevarov.arc.world.block.entity.ContractCoreBlockEntity;
+import com.maksymkashevarov.arc.agent.AgentProfile;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -46,10 +49,14 @@ public final class ContractCoreBlock extends BaseEntityBlock {
             BlockHitResult hitResult
     ) {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            MenuProvider menuProvider = state.getMenuProvider(level, pos);
-            if (menuProvider != null) {
-                serverPlayer.openMenu(menuProvider);
-            }
+            AgentProfile profile = serverPlayer.getData(ArcAttachments.AGENT_PROFILE);
+
+            serverPlayer.sendSystemMessage(
+                    Component.literal(
+                            "ARC Profile | authorized=" + profile.isAuthorized()
+                                    + " | name=" + profile.getAgentName()
+                    )
+            );
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
