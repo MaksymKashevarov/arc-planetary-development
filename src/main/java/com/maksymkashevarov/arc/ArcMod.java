@@ -1,5 +1,6 @@
 package com.maksymkashevarov.arc;
 
+import com.maksymkashevarov.arc.network.ArcNetworking;
 import com.maksymkashevarov.arc.registry.ArcAttachments;
 import com.maksymkashevarov.arc.registry.ArcBlockEntities;
 import com.maksymkashevarov.arc.registry.ArcBlocks;
@@ -21,6 +22,8 @@ public final class ArcMod {
         ArcItems.register(modEventBus);
         ArcBlockEntities.register(modEventBus);
         ArcAttachments.register(modEventBus);
+
+        modEventBus.addListener(ArcNetworking::register);
 
         LOGGER.info("ARC: Planetary Development initialized");
     }

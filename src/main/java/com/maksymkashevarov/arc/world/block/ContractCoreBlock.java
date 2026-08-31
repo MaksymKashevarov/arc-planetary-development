@@ -1,14 +1,14 @@
 package com.maksymkashevarov.arc.world.block;
 
+import com.maksymkashevarov.arc.agent.AgentProfile;
+import com.maksymkashevarov.arc.network.payload.OpenAgentAuthorizationPayload;
 import com.maksymkashevarov.arc.registry.ArcAttachments;
 import com.maksymkashevarov.arc.world.block.entity.ContractCoreBlockEntity;
-import com.maksymkashevarov.arc.agent.AgentProfile;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public final class ContractCoreBlock extends BaseEntityBlock {
 
@@ -51,12 +52,13 @@ public final class ContractCoreBlock extends BaseEntityBlock {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             AgentProfile profile = serverPlayer.getData(ArcAttachments.AGENT_PROFILE);
 
-            serverPlayer.sendSystemMessage(
-                    Component.literal(
-                            "ARC Profile | authorized=" + profile.isAuthorized()
-                                    + " | name=" + profile.getAgentName()
-                    )
-            );
+            if (!profile.isAuthorized()) {
+                PacketDistributor.sendToPlayer(serverPlayer, OpenAgentAuthorizationPayload.INSTANCE);
+            } else {
+                serverPlayer.sendSystemMessage(
+                        Component.literal("ARC Profile | authorized=true | name=" + profile.getAgentName())
+                );
+            }
         }
 
         return InteractionResult.sidedSuccess(level.isClientSide);
