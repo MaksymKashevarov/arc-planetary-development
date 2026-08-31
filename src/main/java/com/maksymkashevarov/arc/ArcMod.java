@@ -1,5 +1,8 @@
 package com.maksymkashevarov.arc;
 
+import com.maksymkashevarov.arc.registry.ArcBlockEntities;
+import com.maksymkashevarov.arc.registry.ArcBlocks;
+import com.maksymkashevarov.arc.registry.ArcItems;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -13,6 +16,10 @@ public final class ArcMod {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public ArcMod(IEventBus modEventBus, ModContainer modContainer) {
+        ArcBlocks.register(modEventBus);
+        ArcItems.register(modEventBus);
+        ArcBlockEntities.register(modEventBus);
+
         LOGGER.info("ARC: Planetary Development initialized");
     }
 }

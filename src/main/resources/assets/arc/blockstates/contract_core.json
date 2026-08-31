@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "arc:block/contract_core"
+    }
+  }
+}
