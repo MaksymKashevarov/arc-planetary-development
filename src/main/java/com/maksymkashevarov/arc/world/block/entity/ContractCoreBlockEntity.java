@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public final class ContractCoreBlockEntity extends BaseContainerBlockEntity {
 
-    public static final int ROWS = 3;
+    public static final int ROWS = 1;
     public static final int SIZE = ROWS * 9;
 
     private NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
