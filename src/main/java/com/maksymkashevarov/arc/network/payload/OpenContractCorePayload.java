@@ -7,7 +7,10 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-public record OpenContractCorePayload(String agentName) implements CustomPacketPayload {
+public record OpenContractCorePayload(
+        String agentName,
+        long creditBalanceMinorUnits
+) implements CustomPacketPayload {
 
     public static final Type<OpenContractCorePayload> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(ArcMod.MOD_ID, "open_contract_core"));
@@ -16,6 +19,8 @@ public record OpenContractCorePayload(String agentName) implements CustomPacketP
             StreamCodec.composite(
                     ByteBufCodecs.STRING_UTF8,
                     OpenContractCorePayload::agentName,
+                    ByteBufCodecs.VAR_LONG,
+                    OpenContractCorePayload::creditBalanceMinorUnits,
                     OpenContractCorePayload::new
             );
 

@@ -21,13 +21,19 @@ public final class ContractCoreMainScreen extends Screen {
     private static final int DARK_TEXT = 0xFF111111;
 
     private final String agentName;
+    private final long creditBalanceMinorUnits;
+
     private View activeView = View.HOME;
 
     private Button agentDataButton;
 
-    public ContractCoreMainScreen(String agentName) {
+    public ContractCoreMainScreen(
+            String agentName,
+            long creditBalanceMinorUnits
+    ) {
         super(Component.literal("Contract Core"));
         this.agentName = agentName;
+        this.creditBalanceMinorUnits = creditBalanceMinorUnits;
     }
 
     @Override
@@ -125,7 +131,7 @@ public final class ContractCoreMainScreen extends Screen {
         this.renderAgentIconPlaceholder(graphics);
 
         String creditsLabel = "Credits:";
-        String creditsValue = "0.00";
+        String creditsValue = this.formatCredits(this.creditBalanceMinorUnits);
         int creditsX = this.width - 145;
 
         graphics.drawString(
@@ -175,6 +181,13 @@ public final class ContractCoreMainScreen extends Screen {
                 0xFF555555,
                 false
         );
+    }
+
+    private String formatCredits(long minorUnits) {
+        long wholeCredits = minorUnits / 100;
+        long fractionalCredits = minorUnits % 100;
+
+        return wholeCredits + "." + String.format("%02d", fractionalCredits);
     }
 
     private void renderSidebarTile(GuiGraphics graphics, int top, int accentColor) {

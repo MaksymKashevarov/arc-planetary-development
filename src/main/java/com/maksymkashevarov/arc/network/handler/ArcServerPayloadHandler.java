@@ -45,7 +45,10 @@ public final class ArcServerPayloadHandler {
 
         PacketDistributor.sendToPlayer(
                 serverPlayer,
-                new OpenContractCorePayload(profile.getAgentName())
+                new OpenContractCorePayload(
+                        profile.getAgentName(),
+                        profile.getCreditBalanceMinorUnits()
+                )
         );
     }
 }

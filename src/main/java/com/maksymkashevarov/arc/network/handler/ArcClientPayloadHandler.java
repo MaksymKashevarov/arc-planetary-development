@@ -24,7 +24,10 @@ public final class ArcClientPayloadHandler {
             IPayloadContext context
     ) {
         Minecraft.getInstance().setScreen(
-                new ContractCoreMainScreen(payload.agentName())
+                new ContractCoreMainScreen(
+                        payload.agentName(),
+                        payload.creditBalanceMinorUnits()
+                )
         );
     }
 }
