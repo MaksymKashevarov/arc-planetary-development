@@ -1,7 +1,9 @@
 package com.maksymkashevarov.arc.network.handler;
 
 import com.maksymkashevarov.arc.client.screen.AgentAuthorizationScreen;
+import com.maksymkashevarov.arc.client.screen.ContractCoreMainScreen;
 import com.maksymkashevarov.arc.network.payload.OpenAgentAuthorizationPayload;
+import com.maksymkashevarov.arc.network.payload.OpenContractCorePayload;
 import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -15,5 +17,14 @@ public final class ArcClientPayloadHandler {
             IPayloadContext context
     ) {
         Minecraft.getInstance().setScreen(new AgentAuthorizationScreen());
+    }
+
+    public static void handleOpenContractCore(
+            OpenContractCorePayload payload,
+            IPayloadContext context
+    ) {
+        Minecraft.getInstance().setScreen(
+                new ContractCoreMainScreen(payload.agentName())
+        );
     }
 }

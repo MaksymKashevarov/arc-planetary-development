@@ -2,11 +2,11 @@ package com.maksymkashevarov.arc.world.block;
 
 import com.maksymkashevarov.arc.agent.AgentProfile;
 import com.maksymkashevarov.arc.network.payload.OpenAgentAuthorizationPayload;
+import com.maksymkashevarov.arc.network.payload.OpenContractCorePayload;
 import com.maksymkashevarov.arc.registry.ArcAttachments;
 import com.maksymkashevarov.arc.world.block.entity.ContractCoreBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -55,8 +55,9 @@ public final class ContractCoreBlock extends BaseEntityBlock {
             if (!profile.isAuthorized()) {
                 PacketDistributor.sendToPlayer(serverPlayer, OpenAgentAuthorizationPayload.INSTANCE);
             } else {
-                serverPlayer.sendSystemMessage(
-                        Component.literal("ARC Profile | authorized=true | name=" + profile.getAgentName())
+                PacketDistributor.sendToPlayer(
+                        serverPlayer,
+                        new OpenContractCorePayload(profile.getAgentName())
                 );
             }
         }

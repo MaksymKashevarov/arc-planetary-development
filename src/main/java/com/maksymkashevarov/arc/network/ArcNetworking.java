@@ -4,6 +4,7 @@ import com.maksymkashevarov.arc.network.handler.ArcClientPayloadHandler;
 import com.maksymkashevarov.arc.network.handler.ArcServerPayloadHandler;
 import com.maksymkashevarov.arc.network.payload.AuthorizeAgentPayload;
 import com.maksymkashevarov.arc.network.payload.OpenAgentAuthorizationPayload;
+import com.maksymkashevarov.arc.network.payload.OpenContractCorePayload;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
@@ -21,6 +22,12 @@ public final class ArcNetworking {
                 OpenAgentAuthorizationPayload.TYPE,
                 OpenAgentAuthorizationPayload.STREAM_CODEC,
                 ArcClientPayloadHandler::handleOpenAuthorization
+        );
+
+        registrar.playToClient(
+                OpenContractCorePayload.TYPE,
+                OpenContractCorePayload.STREAM_CODEC,
+                ArcClientPayloadHandler::handleOpenContractCore
         );
 
         registrar.playToServer(
