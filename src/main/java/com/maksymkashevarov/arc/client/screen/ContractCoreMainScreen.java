@@ -44,7 +44,6 @@ public final class ContractCoreMainScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(graphics, mouseX, mouseY, partialTick);
         this.renderFrame(graphics);
 
         if (this.activeView == View.HOME) {
@@ -54,6 +53,19 @@ public final class ContractCoreMainScreen extends Screen {
         }
 
         super.render(graphics, mouseX, mouseY, partialTick);
+    }
+
+    @Override
+    public void renderBackground(
+            GuiGraphics graphics,
+            int mouseX,
+            int mouseY,
+            float partialTick
+    ) {
+        // Intentionally empty.
+        // Contract Core draws an opaque full-screen frame itself.
+        // Screen#render() calls renderBackground(), so drawing the default
+        // background here would blur our manually rendered ARC UI a second time.
     }
 
     private void renderFrame(GuiGraphics graphics) {
