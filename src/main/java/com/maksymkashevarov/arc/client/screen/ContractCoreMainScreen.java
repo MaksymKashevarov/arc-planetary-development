@@ -126,7 +126,7 @@ public final class ContractCoreMainScreen extends Screen {
 
         String creditsLabel = "Credits:";
         String creditsValue = "0.00";
-        int creditsX = this.width - 220;
+        int creditsX = this.width - 145;
 
         graphics.drawString(
                 this.font,
@@ -146,8 +146,8 @@ public final class ContractCoreMainScreen extends Screen {
                 false
         );
 
-        int contentX = SIDEBAR_WIDTH + 54;
-        int contentY = TOP_BAR_HEIGHT + 38;
+        int contentX = SIDEBAR_WIDTH + 22;
+        int contentY = TOP_BAR_HEIGHT + 34;
 
         graphics.drawString(
                 this.font,
@@ -170,8 +170,8 @@ public final class ContractCoreMainScreen extends Screen {
         graphics.drawString(
                 this.font,
                 "ESC - Return",
-                contentX,
-                this.height - 24,
+                contentX + 18,
+                this.height - 18,
                 0xFF555555,
                 false
         );
